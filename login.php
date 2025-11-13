@@ -11,9 +11,9 @@
     <img src="img/logo.png" alt="logo">
     <h2>Sistema de Tickets TI</h2>
 
-    <form>
-        <input type="text" placeholder="Usuario" required>
-        <input type="password" placeholder="Contraseña" required>
+    <form action="inicio_rol.php" method="POST">
+        <input type="text" name="username" placeholder="Usuario" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
         <button type="submit">Iniciar Sesión</button>
     </form>
 </div>
