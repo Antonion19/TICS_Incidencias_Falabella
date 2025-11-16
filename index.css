@@ -1,147 +1,222 @@
-body{
-        background: #ffffff;
-        font-family: Arial, sans-serif;
-    }
-    .login-box{
-        width: 380px;
-        background: #bdd62f; /* verde del diseño */
-        padding: 40px;
-        margin: 80px auto;
-        border-radius: 18px;
-        text-align: center;
-    }
-    .login-box img{
-        width: 120px;       /* Tamaño sugerido del logo */
-        height: 120px;
-        margin-bottom: 10px;
-    }
-    .login-box h2{
-        font-size: 18px;
-        margin-bottom: 25px;
-        font-weight: normal;
-    }
-    .login-box input{
-        width: 90%;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 6px;
-        border: none;
-        outline: none;
-    }
-    .login-box button{
-        width: 90%;
-        padding: 10px;
-        background: #000000;
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
+/* styles.css */
+/* Cambios / estilo completo para reemplazar y funcionar con tu CSS actual.
+   -> Guarda este archivo como styles.css y mantenlo separado del HTML. */
 
+/* Reset muy simple */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body{
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f6f6f6;
-}
-.layout{
-    display: flex;
-    height: 100vh;
+body {
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+  color: #111;
 }
 
-/* SIDEBAR */
-.sidebar{
-    width: 250px;
-    background: #bdd62f;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+/* Layout principal (pantalla estándar, no responsive) */
+.layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
-.logo img{
-    width: 60px;
-    display: block;
-    margin-bottom: 5px;
+
+/* SIDEBAR (estado expandido por defecto) */
+.sidebar {
+  width: 260px;                /* ancho cuando está abierto */
+  background: #bdd62f;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 18px 14px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  transition: width 220ms ease;
 }
-.menu a{
-    display: block;
-    padding: 10px;
-    margin: 4px 0;
-    text-decoration: none;
-    color: #111;
-    border-radius: 6px;
+
+/* LOGO
+   - El archivo de imagen que pongas debería ser 320x320 px (tal como pediste).
+   - Aquí lo escalamos para que encaje en la cabecera del sidebar.
+*/
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
 }
-.menu a.active{
+.logo img {
+  /* la imagen original puede ser 320x320, pero la mostramos a 56x56 para que no ocupe tanto */
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  /* reduce el espacio alrededor del logo */
+  margin: 0;
+}
+
+/* BOTÓN DE TOGGLE (arriba del menú) */
+.toggle-btn {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.12);
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 8px 0 12px 0;
+  color: #222;
+  font-size: 18px;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  flex: 1 1 auto;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  text-decoration: none;
+  color: #111;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 160ms ease;
+}
+.menu-item i {
+  min-width: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+.menu-item .text {
+  white-space: nowrap;
+}
+.menu-item:hover {
+  background: rgba(255,255,255,0.7);
+}
+.menu-item.active {
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04) inset;
+}
+
+/* USER (al pie del sidebar) */
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.04);
+}
+.user i.fa-user {
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.user-info .name { font-size: 13px; font-weight: 600; }
+.user-info .role { color: rgba(0,0,0,0.55); font-size: 11px; }
+
+/* MAIN vacío por ahora */
+.main {
+  flex: 1 1 auto;
+  background: #fafafa;
+  min-width: 0; /* importante para evitar overflow horizontal */
+}
+
+/* -----------------------
+   ESTADO COLAPSADO (solo iconos visibles)
+   ----------------------- */
+.sidebar.collapsed {
+  width: 72px;  /* deja visible solo los iconos */
+}
+
+/* Cuando está colapsado, ocultamos los textos y ajustamos tamaño del logo */
+.sidebar.collapsed .menu-item .text,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .logo .extra { 
+  display: none;
+}
+
+/* reducimos padding e iconos al colapsar */
+.sidebar.collapsed .menu-item { justify-content: center; padding: 10px 6px; }
+.sidebar.collapsed .menu-item i { font-size: 20px; }
+
+/* hacemos más pequeño el logo (pero el archivo puede seguir siendo 320x320) */
+.sidebar.collapsed .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+/* pequeños ajustes visuales */
+.menu-item + .menu-item { margin-top: 2px; }
+
+
+/* --- Botón externo de colapsar --- */
+.sidebar-toggle{
+    position: absolute;
+    left: 250px; /* mismo ancho del sidebar */
+    top: 15px;
+    z-index: 10;
+    transition: left .3s;
+}
+
+.sidebar.collapsed + .sidebar-toggle{
+    left: 80px; /* ancho del sidebar colapsado */
+}
+
+/* para que quede redondito */
+.sidebar-toggle button{
+    border-radius: 8px;
+}
+/* Botón flotante pegado al borde del sidebar */
+.toggle-floating-btn {
+    position: fixed;
+    top: 20px;
+    left: 250px;              /* mismo ancho del sidebar */
+    transform: translateX(0);
     background: #ffffff;
-}
-.menu a:hover{
-    background: #e6e6e6;
-}
-
-.user{
-    text-align: center;
-}
-.user button{
-    margin-top: 8px;
-    width: 100%;
-    padding: 8px;
-    border: none;
-    background: #000;
-    color: #fff;
-    border-radius: 6px;
-}
-
-/* CONTENIDO PRINCIPAL */
-.content{
-    flex-grow: 1;
-    padding: 25px;
-}
-.cards{
-    display: flex;
-    gap: 15px;
-    margin: 25px 0;
-}
-.card{
-    flex: 1;
-    padding: 18px;
+    border: 2px solid #bdd62f;
     border-radius: 8px;
-    background: #fff;
-    font-weight: bold;
+    padding: 6px 10px;
+    cursor: pointer;
+    z-index: 999;
+    transition: left 0.3s ease;
 }
-.card span{
-    display: block;
-    font-size: 22px;
-    margin-top: 6px;
-}
-.purple{ border-left: 8px solid purple; }
-.yellow{ border-left: 8px solid gold; }
-.orange{ border-left: 8px solid orange; }
-.green{ border-left: 8px solid #3ca63c; }
 
-.panel{
-    display: flex;
-    gap: 15px;
+/* Cuando el sidebar esté colapsado */
+.sidebar.collapsed + .toggle-floating-btn {
+    left: 70px;               /* ancho reducido del sidebar */
 }
-.box{
-    flex: 1;
-    background: #fff;
-    padding: 18px;
-    border-radius: 8px;
+
+.toggle-floating-btn i {
+    font-size: 18px;
 }
-.box ul{
-    list-style: none;
-    padding: 0;
+
+/* ----- CARDS DEL MAIN ----- */
+.main .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
 }
-.bar-list li{
-    margin: 8px 0;
+
+/* Títulos dentro de cards */
+.main .card h6 {
+    font-weight: 600;
 }
-.bar{
-    height: 8px;
-    border-radius: 4px;
-    margin-top: 4px;
+
+.chart-container {
+    max-width: 100%;
+    overflow-x: auto;
 }
-.red{ background: red; width: 40%; }
-.orange{ background: orange; width: 60%; }
-.yellow{ background: gold; width: 75%; }
-.green{ background: #3ca63c; width: 85%; }
+
+.main {
+    transition: margin-left 0.3s ease;
+}

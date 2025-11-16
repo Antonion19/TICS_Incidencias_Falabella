@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login - Sistema de Tickets TI</title>
-<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="login.css">
 </head>
 <body>
 

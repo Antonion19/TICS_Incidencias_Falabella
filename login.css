@@ -1,0 +1,36 @@
+.login-box{
+    width: 380px;
+    background: #bdd62f; /* verde del diseño */
+    padding: 40px;
+    margin: 80px auto;
+    border-radius: 18px;
+    text-align: center;
+}
+.login-box img{
+    width: 120px;       /* Tamaño sugerido del logo */
+    height: 120px;
+    margin-bottom: 10px;
+}
+.login-box h2{
+    font-size: 18px;
+    margin-bottom: 25px;
+    font-weight: normal;
+}
+.login-box input{
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+.login-box button{
+    width: 90%;
+    padding: 10px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}

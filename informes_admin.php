@@ -13,6 +13,8 @@
 
   <!-- Tu CSS separado -->
   <link href="index.css" rel="stylesheet">
+  <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -31,16 +33,19 @@
         </div>
 
       <nav class="menu">
-        <a href="#" class="menu-item active"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Gestión de Incidentes</span></a>
+        <a href="inicio_Admin.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span class="text">Gestión de Usuarios</span></a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
+        <a href="informes_admin.php" class="menu-item active"><i class="fa-solid fa-chart-line"></i><span class="text">Informes y Gráficos</span></a>
         <a href="#" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
+        <a href="#" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
       </nav>
 
       <div class="user">
         <i class="fa-solid fa-user"></i>
         <div class="user-info">
           <div class="name">Carlos Hurtado</div>
-          <small class="role">Soporte de TI</small>
+          <small class="role">Administrador</small>
         </div>
       </div>
     </aside>
@@ -55,6 +60,36 @@
     <!-- MAIN (vacío por ahora, lo veremos después) -->
     <main class="main">
       <!-- contenido se agregará en pasos posteriores -->
+       <!-- CONTENIDO PRINCIPAL -->
+        <div class="container-fluid px-4">
+
+            <h2 class="fw-bold mb-1">&nbsp &nbspInformes y Gráficos</h2>
+            <p class="text-muted mb-4">&nbsp &nbsp &nbsp Análisis estadístico del sistema de tickets</p>
+
+            <div class="row g-4">
+
+                <!-- Gráfico de barras -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h6 class="mb-3">Incidentes por Mes</h6>
+                        <canvas id="chartMeses"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de pastel -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <div class="chart-container">
+                            <h6 class="mb-3">Incidentes por Categoría</h6>
+                            <canvas id="chartCategorias"></canvas>
+                        </div>                        
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </main>
   </div>
 
@@ -76,6 +111,6 @@
         }
     });
     </script>
-
+    <script src="informes_graf.js"></script>
 </body>
 </html>
