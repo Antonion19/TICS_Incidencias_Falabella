@@ -1,3 +1,4 @@
+<?php include 'sesion.php'; ?>
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
@@ -35,16 +36,16 @@
         <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span class="text">Gestión de Usuarios</span></a>
         <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
         <a href="informes_admin.php" class="menu-item"><i class="fa-solid fa-chart-line"></i><span class="text">Informes y Gráficos</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
+        <a href="repo_sol.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
         <a href="#" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
       </nav>
 
       <div class="user">
-        <i class="fa-solid fa-user"></i>
-        <div class="user-info">
-          <div class="name">Carlos Hurtado</div>
-          <small class="role">Administrador</small>
-        </div>
+          <i class="fa-solid fa-user"></i>
+          <div class="user-info">
+              <div class="name"><?php echo htmlspecialchars($nombre_completo); ?></div>
+              <small class="role"><?php echo htmlspecialchars($rol); ?></small>
+          </div>
       </div>
     </aside>
     <!-- BOTÓN FLOTANTE PEGADO AL SIDEBAR -->
