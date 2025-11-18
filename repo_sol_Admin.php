@@ -4,13 +4,24 @@
 $sql = "SELECT 
             r.titulo,
             r.detalle_solucion,
-            r.tipo_solucion,
-            r.palabras_clave
+            r.palabras_clave,
+            c.nombre AS categoria_nombre,
+            c.categoria_id
         FROM repositorio_soluciones r
+        INNER JOIN incidencia i ON r.incidencia_id = i.incidencia_id
+        INNER JOIN categoria_incidencia c ON i.categoria_id = c.categoria_id
         WHERE r.cod_est_obj = 1
         ORDER BY r.created_at DESC";
 
 $result = $conn->query($sql);
+
+// Obtener categorías activas del sistema
+$sqlCategorias = "SELECT categoria_id, nombre 
+                  FROM categoria_incidencia
+                  WHERE cod_est_obj = 1
+                  ORDER BY nombre ASC";
+
+$categorias = $conn->query($sqlCategorias);
 ?>
 
 <!-- index.html -->
@@ -48,10 +59,10 @@ $result = $conn->query($sql);
       <nav class="menu">
         <a href="inicio_Admin.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
         <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span class="text">Gestión de Usuarios</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
+        <a href="lista_incidentes_Admin.php" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
         <a href="informes_admin.php" class="menu-item"><i class="fa-solid fa-chart-line"></i><span class="text">Informes y Gráficos</span></a>
-        <a href="repo_sol.php" class="menu-item active"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
+        <a href="repo_sol_Admin.php" class="menu-item active"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
+        <a href="CrearIncidente_Admin.php" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
       </nav>
 
       <div class="user">
@@ -85,17 +96,32 @@ $result = $conn->query($sql);
                 <input id="searchSol" type="text" class="form-control border-start-0" placeholder="Buscar soluciones...">
             </div>
 
+            <!-- Filtros dinámicos -->
+            <div class="d-flex gap-2 mb-4">
+
+                <!-- Botón 'Todas' -->
+                <button class="btn btn-outline-secondary btn-sm filter-btn" data-filter="all">
+                    Todas
+                </button>
+
+                <?php while ($cat = $categorias->fetch_assoc()): ?>
+                    <button class="btn btn-outline-secondary btn-sm filter-btn" 
+                            data-filter="<?= $cat['categoria_id']; ?>">
+                        <?= htmlspecialchars($cat['nombre']); ?>
+                    </button>
+                <?php endwhile; ?>
+
+            </div>
+
             <!-- Tarjeta de solución -->
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
 
-                    <div class="card shadow-sm border-0 mb-4 sol-card" style="max-width: 900px;">
+                    <div class="card shadow-sm border-0 mb-3" style="max-width: 900px;" data-category="<?= $row['categoria_id']; ?>">
                         <div class="card-body">
-                            <!-- TIPO DE SOLUCIÓN ARRIBA A LA DERECHA -->
                             <span class="badge bg-warning text-dark float-end">
-                                <?= htmlspecialchars($row['tipo_solucion']); ?>
+                                <?= htmlspecialchars($row['categoria_nombre']); ?>
                             </span>
-
                             <!-- TÍTULO -->
                             <h5 class="card-title mb-1">
                                 <?= htmlspecialchars($row['titulo']); ?>
@@ -167,6 +193,36 @@ $result = $conn->query($sql);
                 } else {
                     card.style.display = "none";
                 }
+            });
+        });
+    </script>
+   <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const botones = document.querySelectorAll(".filter-btn");
+            const tarjetas = document.querySelectorAll(".card[data-category]");
+
+            // Si no hay botones o tarjetas, salir sin errores
+            if (!botones.length || !tarjetas.length) return;
+
+            botones.forEach(boton => {
+                boton.addEventListener("click", () => {
+                    const filtro = boton.dataset.filter; // ej: "all" o "3" (categoria_id)
+
+                    tarjetas.forEach(card => {
+                        const categoria = card.dataset.category; // string
+
+                        // Mostrar si filtro es 'all' o coincide con data-category
+                        if (filtro === "all" || categoria === filtro) {
+                            card.style.display = "block";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+
+                    // Marcar botón activo (opcional — ajusta clase CSS .active si la tienes)
+                    botones.forEach(b => b.classList.remove("active"));
+                    boton.classList.add("active");
+                });
             });
         });
     </script>

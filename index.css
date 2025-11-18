@@ -128,7 +128,9 @@ body {
 .main {
   flex: 1 1 auto;
   background: #fafafa;
-  min-width: 0; /* importante para evitar overflow horizontal */
+  min-width: 0;
+  overflow-y: auto;  /* <--- scroll vertical solo aquí */
+  height: 100vh;
 }
 
 /* -----------------------

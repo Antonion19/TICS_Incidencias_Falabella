@@ -52,10 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <nav class="menu">
-          <a href="inicio_Empleado.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
-          <a href="CrearIncidente_Empleado.php" class="menu-item active"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
-          <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Mis Incidentes</span></a>
-          <a href="repo_sol_Empleado.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
+            <a href="inicio_Admin.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
+            <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span class="text">Gestión de Usuarios</span></a>
+            <a href="lista_incidentes_Admin.php" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
+            <a href="informes_admin.php" class="menu-item"><i class="fa-solid fa-chart-line"></i><span class="text">Informes y Gráficos</span></a>
+            <a href="repo_sol_Admin.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
+            <a href="CrearIncidente_Admin.php" class="menu-item active"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
         </nav>
 
         <div class="user">
