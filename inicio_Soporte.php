@@ -33,7 +33,7 @@
 
       <nav class="menu">
         <a href="inicio_Soporte.php" class="menu-item active"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Gestión de Incidentes</span></a>
+        <a href="gestion_Incidentes_Soporte.php" class="menu-item"><i class="fa-solid fa-list"></i><span class="text">Gestión de Incidentes</span></a>
         <a href="repo_sol_Soporte.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
       </nav>
 

@@ -222,3 +222,19 @@ body {
 .main {
     transition: margin-left 0.3s ease;
 }
+
+/* Espaciado entre botones de acciones */
+#tablaGestionInc td .btn {
+    margin-right: 4px;
+}
+
+/* Para que los filtros tengan una separación suave */
+.filtro-btn {
+    border-radius: 20px;
+    padding: 4px 14px;
+}
+
+/* Fix de alineación vertical */
+#tablaGestionInc td {
+    vertical-align: middle;
+}
