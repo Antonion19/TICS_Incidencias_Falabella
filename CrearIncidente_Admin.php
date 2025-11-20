@@ -8,7 +8,11 @@ $description = '';
 $category = '';
 $priority = '';
 
+// Traer categorías desde BD
+$categorias = $conn->query("SELECT categoria_id, nombre FROM categoria_incidencia ORDER BY nombre ASC");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $title       = trim($_POST['title'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $category    = $_POST['category'] ?? '';
@@ -18,7 +22,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Todos los campos son obligatorios.";
     } else {
         include 'conexion.php';
+
+        // INSERT del incidente
+        $stmt = $conn->prepare("
+            INSERT INTO incidencia (titulo, descripcion, categoria_id, prioridad, reportado_por_emp, estado)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+
+        $estado = "Abierto"; // estado inicial siempre
+
+        $stmt->bind_param("ssisss", 
+            $title, 
+            $description, 
+            $category, 
+            $priority, 
+            $_SESSION['empleado_id'],
+            $estado
+        );
+
+        $stmt->execute();
+
         $success = true;
+
         // Limpiar campos
         $title = $description = '';
         $category = $priority = '';
@@ -80,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- FORMULARIO -->
     <main class="main">
      <div class="container-fluid px-4 py-4">
-        <h1 class="h3 mb-1">&nbsp&nbspCrear Nuevo Incidente</h1>
+        <h2 class="fw-bold mb-1">&nbsp&nbspCrear Nuevo Incidente</h2>
         <p class="text-muted mb-4">&nbsp&nbsp&nbsp Reporta un problema o solicita ayuda técnica</p>
         <!-- Mensajes -->
         <?php if ($success): ?>
@@ -134,24 +159,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="col-md-6">
                 <label for="category" class="form-label">Categoría</label>
                 <select class="form-select" id="category" name="category" required>
-                  <option value="">Selecciona una categoría</option>
-                  <option value="hardware" <?= $category==='hardware'?'selected':'' ?>>Hardware</option>
-                  <option value="software" <?= $category==='software'?'selected':'' ?>>Software</option>
-                  <option value="red" <?= $category==='red'?'selected':'' ?>>Red</option>
-                  <option value="acceso" <?= $category==='acceso'?'selected':'' ?>>Acceso y Permisos</option>
-                  <option value="correo" <?= $category==='correo'?'selected':'' ?>>Correo Electrónico</option>
-                  <option value="otro" <?= $category==='otro'?'selected':'' ?>>Otro</option>
+                    <option value="">Selecciona una categoría</option>
+                    <?php while ($cat = $categorias->fetch_assoc()): ?>
+                        <option value="<?= $cat['categoria_id'] ?>"
+                            <?= ($category == $cat['categoria_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($cat['nombre']) ?>
+                        </option>
+                    <?php endwhile; ?>
                 </select>
               </div>
 
               <div class="col-md-6">
                 <label for="priority" class="form-label">Prioridad</label>
                 <select class="form-select" id="priority" name="priority" required>
-                  <option value="">Selecciona la prioridad</option>
-                  <option value="low" <?= $priority==='low'?'selected':'' ?>>Baja - No es urgente</option>
-                  <option value="medium" <?= $priority==='medium'?'selected':'' ?>>Media - Moderadamente importante</option>
-                  <option value="high" <?= $priority==='high'?'selected':'' ?>>Alta - Requiere atención pronta</option>
-                  <option value="critical" <?= $priority==='critical'?'selected':'' ?>>Crítica - Sistema no funcional</option>
+                    <option value="">Selecciona la prioridad</option>
+                    <option value="Alta" <?= $priority==='Alta'?'selected':'' ?>>Alta</option>
+                    <option value="Media" <?= $priority==='Media'?'selected':'' ?>>Media</option>
+                    <option value="Baja" <?= $priority==='Baja'?'selected':'' ?>>Baja</option>
+                    <option value="Urgente" <?= $priority==='Urgente'?'selected':'' ?>>Urgente</option>
                 </select>
               </div>
 
@@ -171,7 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="card-body">
             <ul class="mb-0">
               <li>Proporciona información específica sobre el problema.</li>
-              <li>Incluye capturas de pantalla si es posible.</li>
               <li>Menciona qué has intentado para resolver el problema.</li>
               <li>Indica si el problema afecta a otros usuarios.</li>
               <li>Selecciona la prioridad apropiada según el impacto.</li>

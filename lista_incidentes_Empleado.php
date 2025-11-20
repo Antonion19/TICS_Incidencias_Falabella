@@ -1,5 +1,8 @@
 <?php include 'sesion.php'; 
 
+// Solo traer los incidentes creados por ESTE empleado
+$empleadoId = $_SESSION['empleado_id'];
+
 $sql = "SELECT 
             i.incidencia_id,
             i.titulo,
@@ -28,9 +31,13 @@ $sql = "SELECT
             ON i.asignado_a_emp = asg.empleado_id
 
         WHERE i.cod_est_obj = 1
+          AND i.reportado_por_emp = ?
         ORDER BY i.incidencia_id DESC";
 
-$incidentes = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $empleadoId);
+$stmt->execute();
+$incidentes = $stmt->get_result();
 
 ?>
 <!-- index.html -->
@@ -74,12 +81,10 @@ $incidentes = $conn->query($sql);
         </div>
 
       <nav class="menu">
-        <a href="inicio_Admin.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
-        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i><span class="text">Gestión de Usuarios</span></a>
-        <a href="lista_incidentes_Admin.php" class="menu-item active"><i class="fa-solid fa-list"></i><span class="text">Lista de Incidentes</span></a>
-        <a href="informes_admin.php" class="menu-item"><i class="fa-solid fa-chart-line"></i><span class="text">Informes y Gráficos</span></a>
-        <a href="repo_sol_Admin.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
-        <a href="CrearIncidente_Admin.php" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
+        <a href="inicio_Empleado.php" class="menu-item"><i class="fa-solid fa-home"></i><span class="text">Panel Principal</span></a>
+        <a href="CrearIncidente_Empleado.php" class="menu-item"><i class="fa-solid fa-circle-plus"></i><span class="text">Crear Incidente</span></a>
+        <a href="lista_incidentes_Empleado.php" class="menu-item active"><i class="fa-solid fa-list"></i><span class="text">Mis Incidentes</span></a>
+        <a href="repo_sol_Empleado.php" class="menu-item"><i class="fa-solid fa-book"></i><span class="text">Repositorio de Soluciones</span></a>
       </nav>
 
       <div class="user">
