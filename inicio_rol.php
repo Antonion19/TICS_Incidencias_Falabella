@@ -26,16 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['rol'] = $user['rol'];
 
             // Redirección por rol
-            switch ($user['rol']) {
-                case 'Administrador':
+            $rolUsuario = strtolower(trim($user['rol'])); // normaliza el rol recibido
+
+            switch ($rolUsuario) {
+                case 'administrador':
+                case 'admin':
                     header("Location: inicio_Admin.php");
                     break;
-                case 'Soporte TI':
+
+                case 'soporte ti':
+                case 'soporte':
+                case 'ti':
                     header("Location: inicio_Soporte.php");
                     break;
-                case 'Empleado':
+
+                case 'empleado':
                     header("Location: inicio_Empleado.php");
                     break;
+
                 default:
                     echo "<script>alert('Rol no reconocido.'); window.location='index.php';</script>";
             }

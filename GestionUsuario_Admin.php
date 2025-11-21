@@ -16,38 +16,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_empleado'])) {
     $telefono = trim($_POST['telefono']);
     $rol      = trim($_POST['rol']);
     $area     = trim($_POST['area']);
-    $estado   = trim($_POST['estado']); // activo / inactivo → se convertirá en número
+    $estado   = trim($_POST['estado']); 
 
+    // Estado lógico
     $cod_est_obj = ($estado === "activo") ? 1 : 0;
 
+    // Validación
     if ($nombre=='' || $apellido=='' || $dni=='' || $correo=='' || $telefono=='' || $rol=='' || $area=='') {
         $mensaje_error = "Todos los campos son obligatorios.";
     } else {
+
+        // ----------------------------------------
+        // 1. INSERTAR EMPLEADO
+        // ----------------------------------------
         $sql = "INSERT INTO empleado (nombre, apellido, dni, correo, telefono, rol, area, cod_est_obj) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssssi", $nombre, $apellido, $dni, $correo, $telefono, $rol, $area, $cod_est_obj);
+        $stmt->bind_param("sssssssi", 
+            $nombre, 
+            $apellido, 
+            $dni, 
+            $correo, 
+            $telefono, 
+            $rol, 
+            $area, 
+            $cod_est_obj
+        );
 
         if ($stmt->execute()) {
-            $mensaje_exito = "Empleado creado correctamente.";
+
+            // Tomar el ID del empleado creado
+            $empleado_id = $stmt->insert_id;
+
+            // ----------------------------------------
+            // 2. CREAR USUARIO AUTOMÁTICO
+            // ----------------------------------------
+
+            // Formato: nombre.apellido.area
+            $username = strtolower(
+                str_replace(' ', '', $nombre) . "." . 
+                str_replace(' ', '', $apellido) . "." . 
+                str_replace(' ', '', $area)
+            );
+
+            // contraseña = DNI (sin encriptación)
+            $password = $dni;
+
+            $sqlUser = "INSERT INTO usuario (username, password_hash, password_salt, empleado_id, cod_est_obj)
+                        VALUES (?, ?, NULL, ?, 1)";
+
+            $stmtUser = $conn->prepare($sqlUser);
+            $stmtUser->bind_param("ssi", $username, $password, $empleado_id);
+
+            if ($stmtUser->execute()) {
+                $mensaje_exito = "Empleado y usuario creados correctamente.  
+                                  Usuario: $username 
+                                  Contraseña: $password";
+            } else {
+                $mensaje_error = "Empleado creado, pero error al crear usuario.";
+            }
+
+            $stmtUser->close();
+
         } else {
             $mensaje_error = "Error al crear empleado.";
         }
+
         $stmt->close();
     }
 }
 
-// --- LISTAR EMPLEADOS ---
-$empleados = [];
-$sqlLista = "SELECT empleado_id, nombre, apellido, dni, correo, telefono, rol, area, cod_est_obj 
-             FROM empleado ORDER BY empleado_id DESC";
+    // --- LISTAR EMPLEADOS ---
+    $empleados = [];
 
-$result = $conn->query($sqlLista);
-while ($fila = $result->fetch_assoc()) {
-    $empleados[] = $fila;
-}
+    $sqlLista = "
+        SELECT 
+            e.empleado_id,
+            e.nombre,
+            e.apellido,
+            e.dni,
+            e.correo,
+            e.telefono,
+            e.rol,
+            e.area,
+            e.cod_est_obj,
+            u.username,
+            u.password_hash AS password
+        FROM empleado e
+        LEFT JOIN usuario u ON e.empleado_id = u.empleado_id
+        ORDER BY e.empleado_id DESC
+    ";
+
+    $result = $conn->query($sqlLista);
+
+    while ($fila = $result->fetch_assoc()) {
+        $empleados[] = $fila;
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -158,6 +225,7 @@ while ($fila = $result->fetch_assoc()) {
                 <select name="rol" class="form-select" required>
                     <option value="admin">Administrador</option>
                     <option value="empleado">Empleado</option>
+                    <option value="empleado">Soporte TI</option>
                 </select>
             </div>
 
@@ -206,6 +274,8 @@ while ($fila = $result->fetch_assoc()) {
                         <th>Rol</th>
                         <th>Área</th>
                         <th>Estado</th>
+                        <th>Usuario</th>        <!-- NUEVA COLUMNA -->
+                        <th>Contraseña</th>     <!-- NUEVA COLUMNA -->
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -221,6 +291,7 @@ while ($fila = $result->fetch_assoc()) {
                         <td><?php echo $e['telefono']; ?></td>
                         <td><?php echo ucfirst($e['rol']); ?></td>
                         <td><?php echo ucfirst($e['area']); ?></td>
+
                         <td>
                             <?php if ($e['cod_est_obj']==1): ?>
                                 <span class="badge bg-success">Activo</span>
@@ -228,11 +299,16 @@ while ($fila = $result->fetch_assoc()) {
                                 <span class="badge bg-secondary">Inactivo</span>
                             <?php endif; ?>
                         </td>
+
+                        <!-- NUEVAS CELDAS -->
+                        <td><?php echo $e['username']; ?></td>
+                        <td><?php echo $e['password']; ?></td>
+
                         <td>
                             <a href="editar_usuario.php?id=<?php echo $e['empleado_id']; ?>" class="btn btn-warning btn-sm">Editar</a>
                             <a href="eliminar_usuario.php?id=<?php echo $e['empleado_id']; ?>" 
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('¿Seguro de eliminar?');">Eliminar</a>
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('¿Seguro de eliminar?');">Eliminar</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -243,6 +319,7 @@ while ($fila = $result->fetch_assoc()) {
 
         </div>
     </div>
+
 
 </div>
 
