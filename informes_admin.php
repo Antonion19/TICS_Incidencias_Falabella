@@ -16,6 +16,7 @@
   <link href="index.css" rel="stylesheet">
   <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
 <body>
 
@@ -69,21 +70,43 @@
 
             <div class="row g-4">
 
-                <!-- Gráfico de barras -->
+                <!-- Gráfico de barras: Incidentes por Mes -->
                 <div class="col-md-6">
                     <div class="card shadow-sm p-3">
                         <h6 class="mb-3">Incidentes por Mes</h6>
+                        <div class="chart-container">
                         <canvas id="chartMeses"></canvas>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Gráfico de pastel -->
+                <!-- Gráfico de pastel: Categorías -->
                 <div class="col-md-6">
                     <div class="card shadow-sm p-3">
+                        <h6 class="mb-3">Incidentes por Categoría</h6>
                         <div class="chart-container">
-                            <h6 class="mb-3">Incidentes por Categoría</h6>
-                            <canvas id="chartCategorias"></canvas>
-                        </div>                        
+                        <canvas id="chartCategorias"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico Donut: Estados -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h6 class="mb-3">Incidentes por Estado</h6>
+                        <div class="chart-container">
+                        <canvas id="chartEstados"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico Horizontal: Prioridades -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h6 class="mb-3">Incidentes por Prioridad</h6>
+                        <div class="chart-container">
+                        <canvas id="chartPrioridades"></canvas>
+                        </div>
                     </div>
                 </div>
 

@@ -214,9 +214,20 @@ body {
     font-weight: 600;
 }
 
+/* Contenedor uniforme para todos los gráficos */
 .chart-container {
-    max-width: 100%;
-    overflow-x: auto;
+    width: 100%;
+    height: 350px;          /* tamaño uniforme */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+/* El canvas toma tamaño proporcional */
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .main {
@@ -237,4 +248,8 @@ body {
 /* Fix de alineación vertical */
 #tablaGestionInc td {
     vertical-align: middle;
+}
+
+.card .chart-container {
+    height: 320px; /* ajusta si deseas más */
 }

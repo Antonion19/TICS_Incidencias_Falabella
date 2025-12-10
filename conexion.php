@@ -1,13 +1,13 @@
 <?php
-$host = "db.fr-pari1.bengt.wasmernet.com";   // Host del servicio
-$port = 10272;                                // Puerto proporcionado
-$user = "6b56ac8e7d0580002e21c4d0f7d7";       // Usuario
-$pass = "06916b56-ac8e-7e7f-8000-291d38db31bc"; // Password
-$db   = "dbPWUkaUgT7utrYpRj8h25dm";            // Nombre de la BD
+$host = "localhost";     // Servidor local
+$user = "root";          // Usuario por defecto en XAMPP/WAMP
+$pass = "";              // Contraseña (vacío normalmente)
+$db   = "falabella_incidencias";  // <-- CAMBIA ESTO por el nombre real de tu base
 
-$conn = new mysqli($host, $user, $pass, $db, $port);
+$conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
-    die("Error en la conexión: " . $conn->connect_error);
+    die("Error de conexión: " . $conn->connect_error);
 }
+
 ?>
