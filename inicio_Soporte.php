@@ -54,9 +54,81 @@
         <i class="bi bi-box-arrow-right"></i> Cerrar sesión
     </button>
     <!-- MAIN (vacío por ahora, lo veremos después) -->
-    <main class="main">
-      <!-- contenido se agregará en pasos posteriores -->
-    </main>
+    <main class="main p-4">
+
+      <!-- TÍTULO DE BIENVENIDA -->
+      <div class="mb-4">
+          <h2 class="fw-bold text-success">&nbsp&nbsp¡Bienvenido, <?php echo htmlspecialchars($nombre_completo); ?>!</h2>
+          <p class="text-muted">&nbsp&nbspPanel principal del área de Soporte Técnico – Saga Falabella</p>
+      </div>
+
+      <!-- TARJETAS DE RESUMEN -->
+      <div class="row g-4">
+
+          <!-- Incidentes abiertos -->
+          <div class="col-md-4">
+              <div class="card shadow-sm border-0">
+                  <div class="card-body d-flex align-items-center">
+                      <div class="rounded-circle bg-success text-white d-flex justify-content-center align-items-center me-3"
+                          style="width:55px;height:55px;">
+                          <i class="fa-solid fa-ticket"></i>
+                      </div>
+                      <div>
+                          <h5 class="card-title mb-1">Incidentes Abiertos</h5>
+                          <p class="card-text text-muted">Incidentes que requieren atención inmediata.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- En proceso -->
+          <div class="col-md-4">
+              <div class="card shadow-sm border-0">
+                  <div class="card-body d-flex align-items-center">
+                      <div class="rounded-circle bg-warning text-white d-flex justify-content-center align-items-center me-3"
+                          style="width:55px;height:55px;">
+                          <i class="fa-solid fa-gears"></i>
+                      </div>
+                      <div>
+                          <h5 class="card-title mb-1">En Proceso</h5>
+                          <p class="card-text text-muted">Incidentes que están siendo gestionados.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Repositorio de soluciones -->
+          <div class="col-md-4">
+              <div class="card shadow-sm border-0">
+                  <div class="card-body d-flex align-items-center">
+                      <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3"
+                          style="width:55px;height:55px;">
+                          <i class="fa-solid fa-book"></i>
+                      </div>
+                      <div>
+                          <h5 class="card-title mb-1">Repositorio</h5>
+                          <p class="card-text text-muted">Acceso rápido a soluciones registradas.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- SECCIÓN INFORMATIVA -->
+      <div class="mt-5">
+          <div class="p-4 rounded shadow-sm border" style="background:#f9f9f9;">
+              <h4 class="text-success fw-bold">¿Qué puedes hacer desde este panel?</h4>
+              <ul class="mt-3 text-muted">
+                  <li>Revisar y gestionar incidentes asignados.</li>
+                  <li>Registrar avances y soluciones técnicas.</li>
+                  <li>Consultar el repositorio de soluciones.</li>
+                  <li>Acceder rápidamente a los módulos desde la barra lateral.</li>
+              </ul>
+          </div>
+      </div>
+
+  </main>
   </div>
 
   <!-- Script mínimo y correcto para el toggle (sin ids rotos) -->

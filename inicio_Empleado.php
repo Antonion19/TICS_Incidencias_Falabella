@@ -55,9 +55,63 @@
         <i class="bi bi-box-arrow-right"></i> Cerrar sesión
     </button>
     <!-- MAIN (vacío por ahora, lo veremos después) -->
-    <main class="main">
-      <!-- contenido se agregará en pasos posteriores -->
-    </main>
+    <main class="main p-4">
+
+      <div class="container">
+
+          <h2 class="fw-bold mt-2 mb-3">Panel de Empleado</h2>
+          <p class="text-muted mb-4">Bienvenido, <?php echo htmlspecialchars($nombre_completo); ?>.  
+            Desde aquí puedes gestionar usuarios, supervisar incidencias y acceder a estadísticas principales.</p>
+
+
+
+          <!-- Accesos rápidos -->
+          <div class="row g-4">
+
+              <div class="col-md-4">
+                  <div class="card quick-card shadow-sm text-center">
+                      <div class="card-body">
+                          <i class="fa-solid fa-circle-plus fa-2x mb-3 text-success"></i>
+                          <h5 class="fw-bold">Crear un Incidente</h5>
+                          <p class="text-muted small">Reporta un problema y notifícalo al equipo de soporte.</p>
+                          <a href="CrearIncidente_Empleado.php" class="btn btn-success btn-sm">
+                              Crear incidente
+                          </a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="card quick-card shadow-sm text-center">
+                      <div class="card-body">
+                          <i class="fa-solid fa-list fa-2x mb-3 text-primary"></i>
+                          <h5 class="fw-bold">Mis Incidentes</h5>
+                          <p class="text-muted small">Consulta el progreso de los incidentes que has registrado.</p>
+                          <a href="lista_incidentes_Empleado.php" class="btn btn-primary btn-sm">
+                              Ver lista
+                          </a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-md-4">
+                  <div class="card quick-card shadow-sm text-center">
+                      <div class="card-body">
+                          <i class="fa-solid fa-book fa-2x mb-3 text-warning"></i>
+                          <h5 class="fw-bold">Repositorio de Soluciones</h5>
+                          <p class="text-muted small">Busca soluciones ya documentadas para problemas comunes.</p>
+                          <a href="repo_sol_Empleado.php" class="btn btn-warning btn-sm text-white">
+                              Ver repositorio
+                          </a>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+
+      </div>
+
+  </main>
   </div>
 
   <!-- Script mínimo y correcto para el toggle (sin ids rotos) -->

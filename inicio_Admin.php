@@ -58,7 +58,82 @@
     </button>
     <!-- MAIN (vacío por ahora, lo veremos después) -->
     <main class="main">
-      <!-- contenido se agregará en pasos posteriores -->
+
+        <div class="container-fluid px-4">
+
+            <h2 class="fw-bold mt-2 mb-3">Panel de Administración</h2>
+            <p class="text-muted mb-4">Bienvenido, <?php echo htmlspecialchars($nombre_completo); ?>.  
+            Desde aquí puedes gestionar usuarios, supervisar incidencias y acceder a estadísticas principales.</p>
+
+            <div class="row g-4">
+
+                <!-- TARJETA: Total de Usuarios -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 text-center">
+                        <i class="fa-solid fa-users fa-2x text-primary mb-2"></i>
+                        <h5 class="fw-bold">Gestión de Usuarios</h5>
+                        <p class="text-muted">Revisa, registra o modifica cuentas del sistema.</p>
+                        <a href="GestionUsuario_Admin.php" class="btn btn-primary btn-sm">
+                            Ir a Usuarios
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TARJETA: Incidentes -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 text-center">
+                        <i class="fa-solid fa-list fa-2x text-success mb-2"></i>
+                        <h5 class="fw-bold">Incidentes Registrados</h5>
+                        <p class="text-muted">Control total de los incidentes activos y cerrados.</p>
+                        <a href="lista_incidentes_Admin.php" class="btn btn-success btn-sm">
+                            Ver Incidentes
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TARJETA: Reportes -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3 text-center">
+                        <i class="fa-solid fa-chart-line fa-2x text-warning mb-2"></i>
+                        <h5 class="fw-bold">Informes y Gráficos</h5>
+                        <p class="text-muted">Revisa métricas clave del sistema y rendimiento del soporte.</p>
+                        <a href="informes_admin.php" class="btn btn-warning btn-sm text-white">
+                            Ver Informes
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECCIÓN EXTRA: ACCESOS RÁPIDOS -->
+            <div class="row g-4 mt-3">
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h5 class="mb-2 fw-bold">
+                            <i class="fa-solid fa-circle-plus text-success"></i> Crear Incidente
+                        </h5>
+                        <p class="text-muted">Registra un incidente manualmente para cualquier usuario.</p>
+                        <a href="CrearIncidente_Admin.php" class="btn btn-success btn-sm">
+                            Crear Ahora
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h5 class="mb-2 fw-bold">
+                            <i class="fa-solid fa-book text-dark"></i> Repositorio de Soluciones
+                        </h5>
+                        <p class="text-muted">Consulta soluciones aplicadas anteriormente.</p>
+                        <a href="repo_sol_Admin.php" class="btn btn-dark btn-sm">
+                            Abrir Repositorio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </main>
   </div>
 
