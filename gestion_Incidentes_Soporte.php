@@ -259,6 +259,15 @@ if (isset($_POST['action']) && $_POST['action'] === 'guardar_repositorio') {
   <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
   <!-- Tu CSS separado -->
   <link href="index.css" rel="stylesheet">
 </head>
@@ -344,6 +353,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'guardar_repositorio') {
                             <th>F. Creación</th>
                             <th>F. Cierre</th>
                             <th>Repositorio</th> <!-- NUEVA COLUMNA -->
+                            <th>Detalle</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -400,10 +410,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'guardar_repositorio') {
                                 <td><?= $row['fecha_cierre'] ?: "—" ?></td>
 
                                 <td><?= $row['en_repositorio'] ?></td>
-
+                                <td class="text-center">
+                                    <a href="detalle_incidente.php?id=<?= $row['incidencia_id'] ?>&pdf=1" 
+                                    class="btn btn-sm btn-danger btn-detalle-pdf" target="_blank">
+                                        <i class="fa-solid fa-file-pdf"></i> PDF
+                                    </a>
+                                </td>
                                 <!-- ACCIONES (vacío, lo llena JS) -->
                                 <td class="acciones"></td>
-
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -731,6 +745,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'guardar_repositorio') {
             pageLength: 10,
             
             lengthMenu: [5, 10, 25, 50],
+            dom: 'Bfrtip',
+            buttons: [
+                { extend: 'excelHtml5', text: 'Exportar Excel', className: 'btn-export-excel' },
+                { extend: 'pdfHtml5', text: 'Exportar PDF',  orientation: 'landscape',exportOptions: { columns: ':visible' }, className: 'btn-export-pdf' },
+            ],
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json"
             },

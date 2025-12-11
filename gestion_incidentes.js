@@ -20,6 +20,12 @@ $(document).ready(function () {
             { targets: [0], width: "40px" },
             { targets: [10], width: "80px" },   // Columna Repositorio
             { targets: [11], width: "160px" }   // Columna Acciones
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            { extend: 'excelHtml5', text: 'Exportar Excel' },
+            { extend: 'pdfHtml5', text: 'Exportar PDF' },
+            { extend: 'print', text: 'Imprimir' }
         ]
     });
 
